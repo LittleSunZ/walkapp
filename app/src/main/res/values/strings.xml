@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">享动</string>
+    <string name="loading">正在加载</string>
+    <string name="no_more_data">已经到底了</string>
+    <string name="invite_text">用户每日任务，步数达到4000步时，根据活跃度送雨露\n用户活跃=0时，送1个雨露；\n用户活跃>0，每100个活跃送0.5个雨露；\n例如活跃=100，送1个基数+0.5个=1.5个雨露；\n例如活跃=200，送 1个基数+0.5个0.5个=2个雨露；\n以此类推</string>
+    <string name="invite_text1">邀请好友规则\n邀请一个一级好友，送50活跃；\n邀请一个二级好友，送25活跃；\n邀请一个三级好友，送15活跃；</string>
+</resources>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_40">
+
+    <RelativeLayout
+        android:id="@+id/rl_loading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/load_more_loading_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+
+            <ProgressBar
+                android:id="@+id/current_progressbar"
+                android:layout_width="20dp"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/current_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/current_progressbar"
+                android:layout_marginLeft="10dp"
+                android:text="加载中~"
+                android:textColor="#C1C1C1"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/load_more_load_fail_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+
+        <TextView
+            android:id="@+id/tv_prompt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/brvah_load_failed" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/to_load_view"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:visibility="gone">
+
+
+        <TextView
+            android:id="@+id/tv_to_load_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="上拉查看更多" />
+
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_loadmore_end"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <View
+            android:layout_width="11dp"
+            android:layout_height="2dp"
+            android:background="#eeeeee" />
+
+        <TextView
+            android:id="@+id/load_more_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="7dp"
+            android:gravity="center"
+            android:text="@string/no_more_data"
+            android:textColor="#AAAAAA"
+            android:textSize="10sp"
+            android:visibility="visible" />
+
+        <View
+            android:layout_width="11dp"
+            android:layout_height="2dp"
+            android:background="#eeeeee" />
+    </LinearLayout>
+</FrameLayout>
