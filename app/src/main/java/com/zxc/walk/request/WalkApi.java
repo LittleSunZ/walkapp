@@ -73,6 +73,14 @@ public interface WalkApi {
     );
 
     /**
+     * 找回密码
+     */
+    @POST(value = "userinfo/updatePsdByPhone")
+    Observable<Result<String>> updatePsdByPhone(
+            @Body RequestBody requestBody
+    );
+
+    /**
      * 获取公告列表
      */
     @GET(value = "commontinfo/list/{pageNum}/{pageSize}")

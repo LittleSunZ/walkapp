@@ -67,7 +67,9 @@ public class WalkApiReq extends BaseApiReq<WalkApi> {
      */
     public Observable<Result<String>> updateUserInfo(UserInfo userInfo) {
         Map<String, Object> map = new HashMap<>();
-        map.put("userid", userInfo.getUserid());
+        if (!TextUtils.isEmpty(userInfo.getUserid())) {
+            map.put("userid", userInfo.getUserid());
+        }
         if (!TextUtils.isEmpty(userInfo.getNickname())) {
             map.put("nickname", userInfo.getNickname());
         }
@@ -95,7 +97,24 @@ public class WalkApiReq extends BaseApiReq<WalkApi> {
         if (!TextUtils.isEmpty(userInfo.getHeadimage())) {
             map.put("headimage", userInfo.getHeadimage());
         }
+        if (!TextUtils.isEmpty(userInfo.getPhone())) {
+            map.put("phone", userInfo.getPhone());
+        }
         return getApi().updateUserInfo(buildRequestBody(map));
+    }
+
+    /***
+     * 修改用户信息
+     */
+    public Observable<Result<String>> updatePsdByPhone(UserInfo userInfo) {
+        Map<String, Object> map = new HashMap<>();
+        if (!TextUtils.isEmpty(userInfo.getPassword())) {
+            map.put("password", MD5.doMD5(userInfo.getPassword()));
+        }
+        if (!TextUtils.isEmpty(userInfo.getPhone())) {
+            map.put("phone", userInfo.getPhone());
+        }
+        return getApi().updatePsdByPhone(buildRequestBody(map));
     }
 
     /***

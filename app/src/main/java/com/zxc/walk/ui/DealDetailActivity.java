@@ -171,19 +171,23 @@ public class DealDetailActivity extends TitleBarActivity implements TakePhoto.Ta
 
                 if (message.getTransactiontype() == 0) {
                     //发布的买单
-                    if (userInfo.getUserid().equals(message.getDealuserid())) {
-                        getSafeUserInfo(message.getDealuserid());
+                    if (userInfo.getUserid().equals(message.getUserid())) {
+                        //我发布的买单=别人卖给我
                         getBuyUserInfo(message.getUserid());
+                        getSafeUserInfo(message.getDealuserid());
                     } else {
-                        getBuyUserInfo(message.getDealuserid());
+                        //别人发布的买单=我卖给别人
                         getSafeUserInfo(message.getUserid());
+                        getBuyUserInfo(message.getDealuserid());
                     }
                 } else {
                     //发布的卖单
                     if (userInfo.getUserid().equals(message.getUserid())) {
+                        //我发布的卖单=别人买
                         getBuyUserInfo(message.getDealuserid());
                         getSafeUserInfo(message.getUserid());
                     } else {
+                        //别人发布的卖单=我买
                         getSafeUserInfo(message.getDealuserid());
                         getBuyUserInfo(message.getUserid());
                     }

@@ -2,6 +2,7 @@ package com.zxc.walk.ui;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -26,7 +27,7 @@ import io.reactivex.Observable;
 public class UpdatePsdActivity extends TitleBarActivity {
 
     @BindView(R.id.et_phone)
-    TextView etPhone;
+    EditText etPhone;
     @BindView(R.id.et_password)
     EditText etPassword;
     @BindView(R.id.tv_register)
@@ -52,20 +53,26 @@ public class UpdatePsdActivity extends TitleBarActivity {
         type = getIntent().getIntExtra("type", 0);
         if (type == 0) {
             setTvTitle("修改登录密码");
-        } else {
+        } else if (type == 1) {
             setTvTitle("修改支付密码");
+        } else if (type == 2) {
+            setTvTitle("找回密码");
         }
-        etPhone.setText(PhoneInfoTools.phoneNumerParserFourStar(userInfo.getPhone()));
+        if (userInfo != null && !TextUtils.isEmpty(userInfo.getUserid())) {
+            etPhone.setText(PhoneInfoTools.phoneNumerParserFourStar(userInfo.getPhone()));
+            etPhone.setInputType(InputType.TYPE_NULL);
+        }
     }
 
     @OnClick({R.id.tv_register, R.id.tv_getcode})
     public void onViewClicked(View view) {
+        String phone;
         switch (view.getId()) {
             case R.id.tv_getcode:
                 if (myCountDownTimer == null) {
                     myCountDownTimer = new MyCountDownTimer(60000, 1000);
                 }
-                String phone = userInfo.getPhone();
+                phone = etPhone.getText().toString();
                 if (TextUtils.isEmpty(phone)) {
                     CustomToast.showToast(UpdatePsdActivity.this, "手机号不能为空", Toast.LENGTH_SHORT);
                     return;
@@ -80,6 +87,15 @@ public class UpdatePsdActivity extends TitleBarActivity {
                 String password = etPassword.getText().toString();
                 String password2 = etPassword2.getText().toString();
                 String code = etCode.getText().toString();
+                phone = etPhone.getText().toString();
+                if (TextUtils.isEmpty(phone)) {
+                    CustomToast.showToast(UpdatePsdActivity.this, "手机号不能为空", Toast.LENGTH_SHORT);
+                    return;
+                }
+                if (!PhoneInfoTools.isMobilePhone(phone)) {
+                    CustomToast.showToast(UpdatePsdActivity.this, "手机号格式错误", Toast.LENGTH_SHORT);
+                    return;
+                }
                 if (TextUtils.isEmpty(password)) {
                     CustomToast.showToast(UpdatePsdActivity.this, "密码不能为空", Toast.LENGTH_SHORT);
                     return;
@@ -98,14 +114,23 @@ public class UpdatePsdActivity extends TitleBarActivity {
                 }
                 showProgressDialog("");
                 UserInfo nuserInfo = new UserInfo();
-                nuserInfo.setUserid(userInfo.getUserid());
-//                nuserInfo.setUserid("1005814");
-                if (type == 0) {
+                if (type == 0 || type == 1) {
+                    nuserInfo.setUserid(userInfo.getUserid());
+                    if (type == 0) {
+                        nuserInfo.setPassword(password);
+                    } else {
+                        nuserInfo.setPaypassword(password);
+                    }
+                } else if (type == 2) {
+                    nuserInfo.setPhone(phone);
                     nuserInfo.setPassword(password);
-                } else {
-                    nuserInfo.setPaypassword(password);
                 }
-                Observable<Result<String>> userinfoReq = walkApiReq.updateUserInfo(nuserInfo);
+                Observable<Result<String>> userinfoReq = null;
+                if (type == 0 || type == 1) {
+                    userinfoReq = walkApiReq.updateUserInfo(nuserInfo);
+                } else if (type == 2) {
+                    userinfoReq = walkApiReq.updatePsdByPhone(nuserInfo);
+                }
                 DataCallBack<String> dataCallBack = new DataCallBack<String>() {
                     @Override
                     protected void onSuccessData(String message) {

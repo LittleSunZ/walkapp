@@ -29,6 +29,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     TextView tvLogin;
     @BindView(R.id.tv_register)
     TextView tvRegister;
+    @BindView(R.id.tv_forget_psd)
+    TextView tvForgetPsd;
     @BindView(R.id.et_phone)
     EditText etPhone;
     @BindView(R.id.et_password)
@@ -46,6 +48,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         tvLogin.setOnClickListener(this);
         tvRegister.setOnClickListener(this);
         ivService.setOnClickListener(this);
+        tvForgetPsd.setOnClickListener(this);
     }
 
     @Override
@@ -93,6 +96,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.iv_service:
                 startActivity(new Intent(LoginActivity.this, ServiceActivity.class));
+                break;
+            case R.id.tv_forget_psd:
+                Intent intent = new Intent(LoginActivity.this, UpdatePsdActivity.class);
+                intent.putExtra("type", 2);
+                startActivity(intent);
                 break;
         }
     }

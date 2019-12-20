@@ -50,7 +50,7 @@ public abstract class BaseActivity extends AppCompatActivity implements LifeDisp
         walkApiReq = new WalkApiReq();
         userSp = new UserSp(this);
         userInfo = userSp.getUserInfo();
-        init(savedInstanceState);
+         init(savedInstanceState);
         // 添加Activity到堆栈
         AtyContainer.getInstance().addActivity(this);
     }
